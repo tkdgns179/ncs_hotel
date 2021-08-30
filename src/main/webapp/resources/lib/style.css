@@ -1,0 +1,98 @@
+/* ============================== booking & / room =================START=========== */
+.room_reserve h2 {
+    display: inline-block;
+}
+
+.room_reserve {
+    border-bottom: solid;
+}
+
+.container {
+    margin: 0 3%;
+}
+
+table {
+    width: 100%;
+}
+
+.button {
+    border: none;
+    width: 50px;
+    height: 30px;
+    margin: 10px 20px;
+}
+h4 {
+    background-color: black;
+    color: white;
+    margin: 0;
+}
+.list_header {
+    border-top: solid; 
+    border-top: solid;
+    overflow: hidden;
+    width: inherit;
+    margin-right: 0px;
+    margin-left: 0px;
+}
+tr th {
+    border-bottom: solid
+}
+/* ============================== booking & / room ==================END========== */
+
+/* ===============================login & sign ==================START========== */
+h1.form_name {
+    color: #C5D7BD;
+}
+body, html {
+    height: 100%;
+    
+}
+#sign_login {
+    background-color: white;
+    padding: 20px;
+    height: 100%;
+    border: solid 1px #7EB5A6;
+    text-align: center;
+    border-radius: 10px;
+}
+.login_form {
+    position: absolute;
+    left: 30%;
+    top: 20%;
+    display: inline-block; 
+    width: 500px;
+    height: 500px;
+}
+.insert {
+    border: none;
+    border-bottom: solid 1px;
+    width: 60%; 
+    background: transparent;
+    float: left;
+}
+label {
+    float: left;
+    margin: 0;
+}
+input.input_btn {
+border: none;
+width: 100px;
+height: 30px;
+margin-top: 50px;
+}
+
+#main {
+    background-color: white;
+    padding: 20px;
+    height: 100%;
+    border: solid 1px #7EB5A6;
+    text-align: center;
+    border-radius: 10px;
+}
+#main a {
+    display: inline-block;
+    margin: 20% 10%;   
+    color: #464660;
+    font: 30px bold;
+}
+/* ===============================home & login & sign ==================END============ */
