@@ -2,12 +2,16 @@ package com.hotel.vo;
 
 public class Room {
 	
-	private int roomcode;
+	// room table
+	private int roomcode; // PK
 	private String name;
 	private int type;
 	private Integer howmany;
 	private Integer howmuch;
 	
+	// roomtype table
+	private int type_typecode; // FK
+	private String type_name;
 	
 	public int getRoomcode() {
 		return roomcode;
@@ -39,6 +43,23 @@ public class Room {
 	public void setHowmuch(Integer howmuch) {
 		this.howmuch = howmuch;
 	}
+	
+	
+	public int getType_typecode() {
+		return type_typecode;
+	}
+	public void setType_typecode(int type_typecode) {
+		this.type_typecode = type_typecode;
+	}
+	public String getType_name() {
+		return type_name;
+	}
+	public void setType_name(String type_name) {
+		this.type_name = type_name;
+	}
+
+	
+	
 	
 	
 }

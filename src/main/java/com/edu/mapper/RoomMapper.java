@@ -7,4 +7,6 @@ import com.hotel.vo.Room;
 public interface RoomMapper {
 	
 	ArrayList<Room> getRoomList();
+	ArrayList<Room> getRoomType();
+	
 }

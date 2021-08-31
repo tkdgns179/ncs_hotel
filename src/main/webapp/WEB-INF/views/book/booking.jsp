@@ -24,10 +24,8 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="/resources/lib/style.css">
+<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
 <body>
-	<c:forEach var="room" items="${roomList}">
-		${room.roomcode}
-	</c:forEach>
 	<!-- Navigation -->
     <div class="room_reserve">
         <a href="/book/room"><h2 style="color: black;">객실관리</h2></a>
@@ -47,28 +45,25 @@
                             <th>숙박 인원</th>
                             <th>인당 가격</th>
                         </tr>
+                        	<c:forEach var="room" items="${roomList}" varStatus="status">
                         <tr>
-                            <td>한라산</td>
-                            <td>FamilyRoom</td>
-                            <td>5명</td>
-                            <td>12,000원</td>
+                            <td>${room.name}</td>
+                            <td>${room.type_name}</td>
+                            <td>${room.howmany}</td>
+                            <td>${room.howmuch}</td>
+                            <input type="hidden"  id="room_seq_${status.count}" value="${room.roomcode}">
                         </tr>
-                        <tr>
-                            <td>백두산</td>
-                            <td>SuiteRoom</td>
-                            <td>6명</td>
-                            <td>20,000원</td>
-                        </tr>
+                        	</c:forEach>
                     </table>
                 </div>
             </div>
             <div class="col-4">
                 <form action="">
-                    객실 이름 : <input type="text" name="room_name"><br><br>
-                    객실 분류 : <select name="room_class">
-                        <option value="suite">Suite Room</option>
-                        <option value="family">Family Room</option>
-                        <option value="double">Double Room</option>
+                    객실 이름 : <input type="text" id="name" name="name"><br><br>
+                    객실 분류 : <select id="typecode" name="typecode">
+                    <c:forEach var="roomType" items="${roomTypes}">
+                    	<option value="${roomType.type_typecode}">${roomType.type_name}</option>
+                    </c:forEach>
                     </select><br><br>
                     숙박 기간 : <br>
                     시작일 : <input type="date" name="time_first"><br>
@@ -95,7 +90,9 @@
                             <th>모바일 번호</th>
                         </tr>
                         <tr>
-                            <td>광덕산</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                             <td></td>
                         </tr>
                     </table>
@@ -104,4 +101,10 @@
         </div>
     </div>
 </body>
+<script>
+$(document)
+.on("click", ".list_header tr", function(){
+	
+});
+</script>
 </html>
