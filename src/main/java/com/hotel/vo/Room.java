@@ -57,6 +57,12 @@ public class Room {
 	public void setType_name(String type_name) {
 		this.type_name = type_name;
 	}
+	
+	@Override
+	public String toString() {
+		return "Room [roomcode=" + roomcode + ", name=" + name + ", type=" + type + ", howmany=" + howmany
+				+ ", howmuch=" + howmuch + ", type_typecode=" + type_typecode + ", type_name=" + type_name + "]";
+	}
 
 	
 	

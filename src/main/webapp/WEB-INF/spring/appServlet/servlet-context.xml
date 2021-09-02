@@ -23,7 +23,7 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="com.hotel.org" />
+	<context:component-scan base-package="com.hotel.controller" />
 	
 	<!-- 컨트롤러 인터셉터 -->
 	<interceptors>
@@ -49,5 +49,6 @@
 	<beans:bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 		<beans:constructor-arg index="0" ref="sqlSessionFactory" />
 	</beans:bean>
+
 	
 </beans:beans>

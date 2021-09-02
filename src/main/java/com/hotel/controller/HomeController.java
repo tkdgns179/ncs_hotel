@@ -1,4 +1,4 @@
-package com.hotel.org;
+package com.hotel.controller;
 
 import java.util.Date;
 import java.util.Locale;

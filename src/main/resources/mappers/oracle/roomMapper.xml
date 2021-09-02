@@ -4,7 +4,7 @@
 	<select id="getRoomList" resultType="com.hotel.vo.Room" >
 		select a.roomcode, a.name, b.name as "type_name", a.howmany, a.howmuch 
 			from room a, roomtype b
-			where a.roomcode = b.typecode
+			where a.type = b.typecode
 			order by roomcode
 	</select>
 	<select id="getRoomType" resultType="com.hotel.vo.Room">
@@ -12,5 +12,20 @@
 			from roomtype
 			order by typecode
 	</select>
+	
+	<delete id="doDeleteRoom">
+		delete from room where roomcode = #{roomcode}
+	</delete>
+	
+	<insert id="doAddRoom">
+		insert into room (roomcode, name, type, howmany, howmuch) 
+					values (seq_room.nextval, #{name}, #{type}, #{howmany}, #{howmuch})
+	</insert>
+	
+	<update id="doUpdateRoom">
+		update room set name = #{name}, type = #{type}, howmany = #{howmany}, howmuch = #{howmuch}
+			where roomcode = #{roomcode}
+	</update>
+	
 </mapper>
 

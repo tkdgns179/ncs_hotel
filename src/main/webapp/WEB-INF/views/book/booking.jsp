@@ -1,19 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!-- 비지니스 로직이 View에 있으면 좋지않은 방식 -->
-
-<%
-	/* 
-	out.println((String) session.getAttribute("userid"));
-	String name = 
-	if(!name.equals("sanghoon")) {
-				
-		response.sendRedirect("/login_form");
-	}
-	 */
-%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,10 +11,11 @@
 <!-- bootstrap 4.1.1 -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="/resources/lib/jquery.js"></script>
 <link rel="stylesheet" href="/resources/lib/style.css">
-<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+
 <body>
-	<!-- Navigation -->
+<!-- Navigation -->
     <div class="room_reserve">
         <a href="/book/room"><h2 style="color: black;">객실관리</h2></a>
         <a href="#"><h2 style="color: blue;">예약관리</h2></a> 
@@ -42,11 +31,11 @@
                         <tr style="color: coral;">
                             <th>객실 이름</th>
                             <th>객실 클래스</th>
-                            <th>숙박 인원</th>
-                            <th>인당 가격</th>
+                            <th>최대 인원</th>
+                            <th>일박 가격</th>
                         </tr>
                         	<c:forEach var="room" items="${roomList}" varStatus="status">
-                        <tr>
+                        <tr class="room_items">
                             <td>${room.name}</td>
                             <td>${room.type_name}</td>
                             <td>${room.howmany}</td>
@@ -58,24 +47,28 @@
                 </div>
             </div>
             <div class="col-4">
-                <form action="">
-                    객실 이름 : <input type="text" id="name" name="name"><br><br>
+                <form name="insert_form" action="#">
+                    객실 이름 : <input readonly type="text" id="name" name="name"><br><br>
                     객실 분류 : <select id="typecode" name="typecode">
+                    
+                    <!-- ModelAttribute -->
                     <c:forEach var="roomType" items="${roomTypes}">
-                    	<option value="${roomType.type_typecode}">${roomType.type_name}</option>
+		                    	<option value="${roomType.type_typecode}">${roomType.type_name}</option>
                     </c:forEach>
+                    
                     </select><br><br>
-                    숙박 기간 : <br>
-                    시작일 : <input type="date" name="time_first"><br>
-                    종료일 : <input type="date" name="time_last"><br><br>
-                    숙박 인원 : <input type="number" name="availables"> 명<br><br>
-                    1박 요금 : <input type="text" name="room_price"> 원<br><br>
-                    총 숙박비 : <input type="text" name="total_price"> 원<br><br>
+                    숙박 기간  <br>
+                    시작일 : <input type="date" id="time_first" name="time_first"><br><br>
+                    종료일 : <input type="date" id="time_last" name="time_last"><br><br>
+                    최대 인원 : <input readonly type="number" name="howmany"> 명<br><br>
+                    1박 요금 : <input readonly type="text" name="howmuch"> 원<br><br>
+                    총 숙박비 : <input readonly type="text" name="total_price"> 원<br><br>
                     예약자 모바일 : <input type="text" name="mobile">
                 </form>
-                <div class="d-flex justify-content-center mt-3" style="width: 100%;">
+                <div class="d-flex justify-content-left mt-3" style="width: 100%;">
                     <input class="button reg" type="button" value="등록">
                     <input class="button del" type="button" value="삭제"> 
+                    <input class="button reset" type="button" value="리셋"> 
                 </div>
                 
             </div>
@@ -99,12 +92,111 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>	
 </body>
 <script>
+let first = ""; 
+let last = "";
+
+var list_target;
 $(document)
-.on("click", ".list_header tr", function(){
+/* 
+.ready(function(){
+	$.post('http://127.0.0.1:8080/book/getRoomType', {}, function(result){ // @ResponseBody
+		console.log(result);
+		let str = ""
+		$.each(result, function(idx, val){
+			str += '<option value="'+val['type_typecode']+'">'+val['type_name']+'</option>\n'
+		})
+		$('#typecode').append(str);
+		
+	}, 'json')
+})
+ */
+ 
+.on('click', '.room_items', function(){
 	
-});
+	arr = []
+	$(this).find('td').each(function(idx, item){
+		arr.push($(this).text())
+	})
+	$('input[name="name"]').val(arr[0])
+	$('input[name="howmany"]').val(arr[2])
+	$('input[name="howmuch"]').val(arr[3])
+	
+	
+	$('#typecode').find('option').remove();
+	
+	<c:forEach var="room" items="${roomList}">
+	if ($('input[name="name"]').val() == '${room.name}'){
+		$('#typecode').append('<option value="${room.roomcode}">${room.type_name}</option>')
+	}
+	</c:forEach>
+	
+	$('#typecode').find('option').each(function(){
+		if ($(this).text() == arr[1] ) $(this).attr('selected', 'selected');
+	})
+	
+	list_target = $(this).find('input[type="hidden"]').val();
+	
+	return false;
+})
+.on('change', '#typecode', function(){
+	<c:forEach var="room" items="${roomList}">
+	if ($('input[name="name"]').val() == '${room.name}' && $('#typecode option:selected').text() == '${room.type_name}' ){
+		$('input[name="howmuch"]').val('${room.howmuch}')
+		$('input[name="howmany"]').val('${room.howmany}')
+	}
+	</c:forEach>
+	
+	return false;
+})
+.on('change', '#time_first, #time_last, .room_items tr', function(){
+	let first = $('#time_first').val()
+	let last = $('#time_last').val()
+	
+	if (first != "" && last != "") {
+		let start = new Date(first);
+		let end = new Date(last)
+		let diff = end.getTime() - start.getTime()
+		let days = diff/1000/60/60/24;
+		let howmuch = parseInt($('input[name="howmuch"]').val());
+		if ($('input[name="howmuch"]').val() != "") {
+			let total = howmuch*(days);
+			$('input[name="total_price"]').val(total);
+		}
+	}
+	
+	return false;
+})
+.on('click', '.button.reset', function(){
+	$('form[name="insert_form"]').find('input').each(function(){
+		$(this).val('');
+	})
+	
+	$('#typecode').find('option').remove();
+	
+	<c:forEach var="roomType" items="${roomTypes}">
+	$('#typecode').append('<option value="${roomType.type_typecode}">${roomType.type_name}</option>')
+	</c:forEach>
+	
+	return false;
+})
+.on('click', '.button.del', function(){ // @ResponseBody
+	
+	$.post('http://127.0.0.1:8080/book/deleteRoom', {roomcode : list_target }, function(result){
+		if (result == "OK") {
+			$('.button.reset').trigger('click');
+			$('.room_items').find('input[type="hidden"]').each(function(idx, item){
+				if ($(this).val() == list_target) $(this).parent('.room_items').remove(); 
+			})
+		} 
+	}, 'text' ) 
+	
+	
+	
+	return false;
+})
+
 </script>
 </html>
