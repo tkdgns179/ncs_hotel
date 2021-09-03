@@ -43,7 +43,7 @@
 		                    <input type="text" id="room_class" name="room_class"><br><br>
 						</div>
 						
-						<input style="display: inline-block" class="button" id="search_room" type="button" value="검색">
+<!-- 						<input style="display: inline-block" class="button" id="search_room" type="button" value="검색"> -->
 						                    
                 	</div>
                 
