@@ -47,8 +47,10 @@
             </div>
             <div class="col-6">
                 <form name="insert_form" action=#>
-                    객실 이름 : <input type="text" id="name" name="name"><br><br>
-                    객실 분류 : <select id="typecode" name="typecode">
+                   <label for="name">객실 이름</label><br>
+                    <input readonly type="text" id="name" name="name"><br><br>
+                    <label for="typecode">객실 분류</label><br>
+                    <select id="typecode" name="typecode">
                         
                         <!-- ModelAttribute -->
                     <c:forEach var="roomType" items="${roomTypes}">
@@ -56,9 +58,11 @@
                     </c:forEach>
 
                     </select><br><br>
-                    숙박가능 인원 : <input type="number" name="howmany"> 명<br><br>
-                    1박 요금 : <input type="text" name="howmuch"> 원
-                    <input type="hidden" id="roomcode">
+                   <label for="howmany">최대인원</label><br>
+                   <input readonly type="number" id="howmany" name="howmany"> 명<br><br>
+                   <label for="howmuch">1박 요금</label><br>
+                   <input type="hidden" id="roomcode">
+                   <input readonly type="text" id="howmuch" name="howmuch"> 원<br><br>
                 </form>
                 <input class="button reg" type="button" value="등록">
                 <input class="button update" type="button" value="수정">
@@ -70,27 +74,29 @@
     </div>
 </body>
 <script>
+var list_target;
+
 $(document)
 .on('click', '.button.reg, .button.update', function(){
 	let name = $('input[name="name"]').val()
 	let type = $('#typecode').val()
 	let howmany = $('input[name="howmany"]').val()
 	let howmuch = $('input[name="howmuch"]').val()
-	console.log(name + "/" + type +"/"+ howmany + "/" + howmuch);
+	console.log(name + "/" + type +"/"+ howmany + "/" + howmuch + "/" + roomcode + "/");
 	if (name == "" || type == "" || howmany == "" || howmuch == "") {
 		alert('입력란이 비었습니다')  
 		return false
 	}
 	
-	if ($('#roomcode') == "") { // insert
-		$.post('http://127.0.0.1:8080/book/addRoom', {name : name, type : type, howmany : howmany, howmuch : howmuch}, 
+	if ($.trim($('#roomcode').val()) == "") { // insert
+		$.post('/book/addRoom', {name : name, type : type, howmany : howmany, howmuch : howmuch}, 
 				function(result) {
 				if (result == 'OK') {
 					location.reload();
 				}
 		}, 'text')
 	} else { // update
-		$.post('http://127.0.0.1:8080/book/updateRoom', {name : name, roomcode : $('#roomcode').val(), type : type, howmany : howmany, howmuch : howmuch },
+		$.post('/book/updateRoom', {name : name, roomcode : $('#roomcode').val(), type : type, howmany : howmany, howmuch : howmuch },
 				function(result) {
 				if (result == "OK")
 					location.reload()
@@ -130,6 +136,7 @@ $(document)
 	$('form[name="insert_form"]').find('input').each(function(){
 		$(this).val('');
 	})
+	
 	$('#roomcode').val('');
 	
 	$('#typecode').find('option').remove();
@@ -137,6 +144,21 @@ $(document)
 	<c:forEach var="roomType" items="${roomTypes}">
 	$('#typecode').append('<option value="${roomType.type_typecode}">${roomType.type_name}</option>')
 	</c:forEach>
+	
+	return false;
+})
+.on('click', '.button.del', function(){ // @ResponseBody
+	
+	$.post('/book/deleteRoom', {roomcode : list_target }, function(result){
+		if (result == "OK") {
+			$('.button.reset').trigger('click');
+			$('.room_items').find('input[type="hidden"]').each(function(idx, item){
+				if ($(this).val() == list_target) $(this).parent('.room_items').remove(); 
+			})
+		} 
+	}, 'text' ) 
+	
+	
 	
 	return false;
 })

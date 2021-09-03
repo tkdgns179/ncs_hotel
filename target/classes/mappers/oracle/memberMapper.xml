@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edu.mapper.MemberMapper">
+
+	<select id="getMembers" resultType="com.hotel.vo.Member">
+		select * from member
+	</select>
+	
+	<select id="doCheckUser" resultType="int">
+		select count(*) from member where loginid = #{loginid} and passcode = #{passcode}
+	</select>
+
+	<insert id="addMember">
+		insert into member values(#{name}, #{loginid}, #{passcode})
+	</insert>
+
+</mapper>

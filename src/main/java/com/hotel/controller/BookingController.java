@@ -55,7 +55,7 @@ public class BookingController {
 	@ResponseBody
 	public String getRoomDelete(HttpServletRequest request) {
 		int roomcode = Integer.parseInt(request.getParameter("roomcode"));
-//		System.out.println(roomcode);
+		// System.out.println(roomcode);
 		RoomMapper roomMapper = sqlSession.getMapper(RoomMapper.class);
 		roomMapper.doDeleteRoom(roomcode);
 		return "OK";
@@ -65,7 +65,7 @@ public class BookingController {
 	@ResponseBody
 	public String addRoom(Room room) {
 		RoomMapper roomMapper = sqlSession.getMapper(RoomMapper.class);
-		System.out.println(room.toString());
+		// CHECK System.out.println(room.toString());
 		roomMapper.doAddRoom(room);
 		
 		return "OK";
@@ -75,7 +75,7 @@ public class BookingController {
 	@ResponseBody
 	public String updateRoom(Room room) {
 		RoomMapper roomMapper = sqlSession.getMapper(RoomMapper.class);
-		System.out.println(room.toString());
+		 System.out.println(room.toString());
 		roomMapper.doUpdateRoom(room);
 		return "OK";
 	}

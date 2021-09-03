@@ -8,6 +8,7 @@
 </head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="/resources/lib/jquery.js"></script>
 <link rel="stylesheet" href="/resources/lib/style.css">
 <body>
 <style>
@@ -18,20 +19,43 @@ body, html {
 </style>
 <div class="login_form ">
 	<h1 class="form_name">회원가입 페이지</h1>
-	<form id= sign_login action="/login_form" method="post">
+	<form id= sign_login action="/signup" method="post">
 	    <label for="user_id">이름</label><br>
-	    <input class="insert" type="text" name="user_name" id=user_name> <br><br>
+	    <input class="insert" type="text" name="name" id=name> <br><br>
 	    <label for="user_pwd">아이디</label><br>
-	    <input class="insert" type="text" name="user_id" id=user_id> <br><br>
+	    <input class="insert" type="text" name="loginid" id=loginid> <br><br>
 	    <label for="user_pwd">비밀번호</label><br>
-	    <input class="insert" type="password" name="user_pwd" id=user_pwd> <br><br>
+	    <input class="insert" type="password" name="passcode" id=passcode> <br><br>
 	    <label for="user_pwd">비밀번호 확인</label><br>
-	    <input class="insert" type="password" name="user_repwd" id=user_repwd> <br><br>
-	    <label for="user_pwd">모바일</label><br>
-	    <input class="insert" type="text" name="mobile" id=mobile> <br><br>
+	    <input class="insert" type="password" name="passcode2" id=passcode2> <br><br>
 	    <input class="input_btn" type="submit" value="회원 등록">
 	    <a href="/login_form"><input class="input_btn" type="button" value="로그인하기"></a>
 	</form>
 </div>
 </body>
+<script>
+$(document)
+.on('submit', '#sign_login', function(e){
+	
+	let passcode1 = $('#passcode').val()
+	let passcode2 = $('#passcode2').val()
+	
+	$('#sign_login input').each(function(idx, item) {
+		if( $.trim($(this).val()) == "" ) { 
+			alert("공백은 입력할 수 없습니다")
+			e.preventDefault();
+			return false;
+		}
+	})
+	
+	if ( passcode1 != passcode2 ) {
+		alert('비밀번호를 다시 확인해주세요');
+		e.preventDefault();
+		return false;
+	}
+	
+})
+</script>
+
+
 </html>

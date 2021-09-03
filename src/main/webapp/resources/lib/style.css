@@ -37,6 +37,9 @@ h4 {
 tr th {
     border-bottom: solid
 }
+div.search_date {
+	display: inline-block;
+}
 /* ============================== booking & / room ==================END========== */
 
 /* ===============================login & sign ==================START========== */
@@ -95,4 +98,6 @@ margin-top: 50px;
     color: #464660;
     font: 30px bold;
 }
+
+
 /* ===============================home & login & sign ==================END============ */

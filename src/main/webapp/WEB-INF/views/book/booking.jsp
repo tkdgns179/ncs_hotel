@@ -27,6 +27,26 @@
             <div class="col-4 h4tag" style="border-right: solid; padding: 0;">
                     <h4>객실 목록</h4>
                 <div class="row list_header">
+                	<div class="search_input">
+                	 	 
+	                	<div class="search_data search_date">
+		                    <label for="time_first">시작일</label><br>
+		                    <input type="date" id="time_first" name="time_first"><br><br>
+	                	</div> 
+						<div class="search_data search_date">
+		                    <label for="time_last">종료일</label><br>
+		                    <input type="date" id="time_last" name="time_last"><br><br>
+						</div>
+						
+						<div class="search_data search_date">
+		                    <label for="time_last">객실종류</label><br>
+		                    <input type="text" id="room_class" name="room_class"><br><br>
+						</div>
+						
+						<input style="display: inline-block" class="button" id="search_room" type="button" value="검색">
+						                    
+                	</div>
+                
                     <table>
                         <tr style="color: coral;">
                             <th>객실 이름</th>
@@ -48,8 +68,10 @@
             </div>
             <div class="col-4">
                 <form name="insert_form" action="#">
-                    객실 이름 : <input readonly type="text" id="name" name="name"><br><br>
-                    객실 분류 : <select id="typecode" name="typecode">
+                	<label for="name">객실 이름</label><br>
+                    <input readonly type="text" id="name" name="name"><br><br>
+                    <label for="typecode">객실 분류</label><br>
+                    <select id="typecode" name="typecode">
                     
                     <!-- ModelAttribute -->
                     <c:forEach var="roomType" items="${roomTypes}">
@@ -58,12 +80,18 @@
                     
                     </select><br><br>
                     숙박 기간  <br>
-                    시작일 : <input type="date" id="time_first" name="time_first"><br><br>
-                    종료일 : <input type="date" id="time_last" name="time_last"><br><br>
-                    최대 인원 : <input readonly type="number" name="howmany"> 명<br><br>
-                    1박 요금 : <input readonly type="text" name="howmuch"> 원<br><br>
-                    총 숙박비 : <input readonly type="text" name="total_price"> 원<br><br>
-                    예약자 모바일 : <input type="text" name="mobile">
+                    <label for="time_first">시작일</label><br>
+                    <input type="date" id="time_first" name="time_first"><br><br>
+                    <label for="time_last">종료일</label><br>
+                    <input type="date" id="time_last" name="time_last"><br><br>
+                    <label for="howmany">최대인원</label><br>
+                    <input readonly type="number" id="howmany" name="howmany"> 명<br><br>
+                    <label for="howmuch">1박 요금</label><br>
+                    <input readonly type="text" id="howmuch" name="howmuch"> 원<br><br>
+                    <label for="total_price">총 숙박비</label><br>
+                    <input readonly type="text" id="total_price" name="total_price"> 원<br><br>
+                    <label for="mobile">예약자 모바일</label><br>
+                    <input type="text" id="mobile" name="mobile">
                 </form>
                 <div class="d-flex justify-content-left mt-3" style="width: 100%;">
                     <input class="button reg" type="button" value="등록">
@@ -184,7 +212,7 @@ $(document)
 })
 .on('click', '.button.del', function(){ // @ResponseBody
 	
-	$.post('http://127.0.0.1:8080/book/deleteRoom', {roomcode : list_target }, function(result){
+	$.post('/book/deleteRoom', {roomcode : list_target }, function(result){
 		if (result == "OK") {
 			$('.button.reset').trigger('click');
 			$('.room_items').find('input[type="hidden"]').each(function(idx, item){
