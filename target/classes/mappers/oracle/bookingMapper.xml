@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.edu.mapper.BookingMapper">
+	<insert id="addBooking">
+		insert into booking values(seq_booking.nextval, #{roomcode}, #{person}, #{checkin}, #{checkout}, #{name}, #{mobile}, #{total})
+	</insert>
+	
+	<select id="getBookings" resultType="com.hotel.vo.Booking">
+		select b.bookcode bookcode, a.name room_name, b.checkin checkin, b.checkout checkout, nvl(b.mobile, '없음') mobile, b.person person
+			from room a, booking b
+			where a.roomcode = b.roomcode
+			order by room_name
+	</select>
+	
+	<select id="getOneBooking" resultType="com.hotel.vo.Booking">
+		select a.roomcode roomcode, b.bookcode bookcode, a.name room_name, c.name room_typename, b.checkin checkin,
+		 b.checkout checkout, a.howmany howmany, b.person person, a.howmuch howmuch,
+		 b.total total, b.name name, b.mobile mobile
+		    from room a, booking b, roomtype c
+		    where a.roomcode = b.roomcode
+		    and a.type = c.typecode 
+		    and b.bookcode = #{id}
+	</select>
+	
+	<delete id="doDeleteBooking">
+		delete from booking where bookcode = #{id}
+	</delete>
+	
+	
+</mapper>

@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.edu.mapper.BookingMapper;
 import com.edu.mapper.RoomMapper;
+import com.hotel.vo.Booking;
 import com.hotel.vo.Room;
 
 
@@ -75,11 +77,60 @@ public class BookingController {
 	@ResponseBody
 	public String updateRoom(Room room) {
 		RoomMapper roomMapper = sqlSession.getMapper(RoomMapper.class);
-		 System.out.println(room.toString());
+		System.out.println(room.toString());
 		roomMapper.doUpdateRoom(room);
 		return "OK";
 	}
 	
+	@RequestMapping(value = "/searchRooms", method = RequestMethod.POST)
+	@ResponseBody
+	public List<Room> searchRooms(Booking booking) {
+		RoomMapper roomMapper = sqlSession.getMapper(RoomMapper.class);
+		// System.out.println(booking.toString());
+		List<Room> roomList = roomMapper.getSearchRooms(booking);
+		// System.out.println(roomList.size());
+		return roomList;
+	}
+	
+	@RequestMapping(value = "/addBooking", method = RequestMethod.POST)
+	@ResponseBody
+	public String addBooking(Booking booking) {
+		BookingMapper bookingMapper = sqlSession.getMapper(BookingMapper.class);
+		// System.out.println(booking.toString());
+		bookingMapper.addBooking(booking);
+		
+		return "OK";
+	}
+	
+	@RequestMapping(value = "/getBookings", method = RequestMethod.POST)
+	@ResponseBody
+	public List<Booking> getBookings() {
+		BookingMapper bookingMapper = sqlSession.getMapper(BookingMapper.class);
+		List<Booking> bookingList = bookingMapper.getBookings();
+		
+		return bookingList;
+	}
+	
+	@RequestMapping(value = "/getOneBooking", method = RequestMethod.POST)
+	@ResponseBody
+	public Booking getOneBooking(HttpServletRequest request) {
+		int id = Integer.parseInt(request.getParameter("id"));
+		BookingMapper bookingMapper = sqlSession.getMapper(BookingMapper.class);
+		Booking booking = bookingMapper.getOneBooking(id);
+		// System.out.println(booking.toString());
+		
+		return booking;
+	}
+	
+	@RequestMapping(value = "/doDeleteBooking", method = RequestMethod.POST)
+	@ResponseBody
+	public String doDeleteBooking(HttpServletRequest request) {
+		int id = Integer.parseInt(request.getParameter("id"));
+		BookingMapper bookingMapper = sqlSession.getMapper(BookingMapper.class);
+		bookingMapper.doDeleteBooking(id);
+		
+		return "OK";
+	}
 //	FIXME ModelAttribute 데이터를 JSON 데이터로 넘겼음 그러나 Jquery에 JSTL로 구현해서 사용했기 때문에 막아둠
 //	@RequestMapping(value="/getRoomType", method=RequestMethod.POST)
 //	@ResponseBody

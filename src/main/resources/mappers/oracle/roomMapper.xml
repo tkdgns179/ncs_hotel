@@ -27,5 +27,41 @@
 			where roomcode = #{roomcode}
 	</update>
 	
+	<select id="getSearchRooms" resultType="com.hotel.vo.Room" >
+		select *
+		from
+		(
+		select a.roomcode roomcode, a.name name, c.name type_name, a.howmuch howmuch, a.howmany howmany
+		    from room a, booking b, roomtype c
+		    where a.type = c.typecode
+		    and a.roomcode = b.roomcode(+)
+		minus
+		select a.roomcode roomcode, a.name name, c.name type_name, a.howmuch howmuch, a.howmany howmany
+		    from room a, booking b, roomtype c
+		    where a.roomcode = b.roomcode
+		    and a.type = c.typecode
+		    and
+		    (
+			    (
+				    to_date(#{checkin}) between to_date(b.checkin) and to_date(b.checkout) -1
+				    or 
+				    to_date(#{checkout}) between to_date(b.checkin) +1 and to_date(b.checkout)
+			    )
+			    or 
+			    (
+				    to_date(b.checkin) between to_date(#{checkin}) and to_date(#{checkout}) -1
+				    or 
+				    to_date(b.checkout) between to_date(#{checkin}) +1 and to_date(#{checkout})
+			    )
+			)
+		    
+		    group by a.roomcode, a.name, c.name, a.howmuch, a.howmany
+		) a
+		<if test="!name.equals('all')">
+		where a.type_name = #{name}
+		</if>
+		    
+	</select>
+	
 </mapper>
 
