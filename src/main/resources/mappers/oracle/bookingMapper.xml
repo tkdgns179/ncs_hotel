@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.edu.mapper.BookingMapper">
+<mapper namespace="com.hotel.mapper.BookingMapper">
 	<insert id="addBooking">
 		insert into booking values(seq_booking.nextval, #{roomcode}, #{person}, #{checkin}, #{checkout}, #{name}, #{mobile}, #{total})
 	</insert>
@@ -25,6 +25,10 @@
 	<delete id="doDeleteBooking">
 		delete from booking where bookcode = #{id}
 	</delete>
+	
+	<update id="doUpdateBooking">
+		update booking set person = #{booking.person}, mobile = #{booking.mobile}, name = #{booking.name} where bookcode = #{id}
+	</update>
 	
 	
 </mapper>

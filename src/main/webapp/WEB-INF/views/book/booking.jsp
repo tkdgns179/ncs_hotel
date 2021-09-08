@@ -190,8 +190,8 @@ let last = "";
 var checkin;
 var checkout;
 
-var list_target;
-var del_target;
+var list_target = "";
+var booking_target = "";
 $(document)
 /* 
 .ready(function(){
@@ -363,12 +363,29 @@ $(document)
 		post_getBookings();
 	})
 })
+.on('click', '.button.update', function(){
+	
+	if ($('#form_bookcode').val() != "") {
+		$.post('/book/doUpdateBooking', {
+			id : $('#form_bookcode').val(),
+			person : $('#stay_num').val(),
+			name : $('#reg_name').val(),
+			mobile : $('#mobile').val()
+		}, function(result){
+			console.log(result);
+			post_getBookings();
+		})
+	} else {
+		alert('수정할 대상이 없습니다')
+	}
+	
+})
 .ready(function(){
 	post_getBookings();
 })
 .on('click', '.booking_items', function(){
 	
-	del_target = $(this);
+	booking_target = $(this);
 	
 	$.post('/book/getOneBooking', {id : $(this).find('input').val()}, function(result){
 		console.log(result)
@@ -393,7 +410,7 @@ $(document)
 		console.log(result);
 		
 		if (result == 'OK') {
-			del_target.remove();
+			booking_target.remove();
 		}
 	})
 })
@@ -407,11 +424,11 @@ function post_getBookings() {
 		for (var idx in result) {
 			str += '<tr class="booking_items">\n'
 			str += '<td>'+result[idx].room_name+'</td>\n'
-	           str += '<td>'+result[idx].checkin+'~'+result[idx].checkout+'</td>\n'
-	           str += '<td>'+result[idx].person+'</td>\n'
-	           str += '<td>'+result[idx].mobile+'</td>\n'
-	           str += '<input type="hidden"  value="'+result[idx].bookcode+'">\n'
-	           str += '</tr>\n'
+			str += '<td>'+result[idx].checkin+'~'+result[idx].checkout+'</td>\n'
+			str += '<td>'+result[idx].person+'</td>\n'
+			str += '<td>'+result[idx].mobile+'</td>\n'
+			str += '<input type="hidden"  value="'+result[idx].bookcode+'">\n'
+			str += '</tr>\n'
 		}
 		
 		$('#tbl_booking').append(str);

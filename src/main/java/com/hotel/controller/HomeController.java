@@ -1,23 +1,20 @@
 package com.hotel.controller;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.apache.ibatis.session.SqlSession;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.edu.mapper.MemberMapper;
+import com.hotel.mapper.MemberMapper;
 import com.hotel.vo.Member;
 
 /**
@@ -56,10 +53,16 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value = "/signup", method = RequestMethod.POST) 
-	public String signup(Member member) {
+	public String signup(@ModelAttribute("member") @Valid Member member, Errors errors) {
 		
 		MemberMapper memberMapper = sqlSession.getMapper(MemberMapper.class);
 		System.out.println(member.toString());
+		
+		if (errors.hasErrors()) {
+			
+			System.out.println("에러검출 "+errors.toString());
+			return "sign";
+		}
 		
 		memberMapper.addMember(member);
 		

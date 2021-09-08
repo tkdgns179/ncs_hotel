@@ -1,4 +1,4 @@
-package com.edu.mapper;
+package com.hotel.mapper;
 
 import java.util.ArrayList;
 

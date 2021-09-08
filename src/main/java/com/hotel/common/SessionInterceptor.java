@@ -10,8 +10,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.edu.mapper.MemberMapper;
-import com.edu.mapper.RoomMapper;
+import com.hotel.mapper.MemberMapper;
+import com.hotel.mapper.RoomMapper;
 import com.hotel.vo.Member;
 import com.hotel.vo.Room;
 

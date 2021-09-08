@@ -10,5 +10,18 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
 	
-
+	<!-- 
+	<bean id='messageSource'
+		class='org.springframework.context.support.ResourceBundleMessageSource'>
+		<property name="basenames">
+			<list>
+				<value>properties.error</value>
+			</list>
+		</property>
+	</bean>
+	 -->
+	 
+	<!-- validator -->
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
+	
 </beans>

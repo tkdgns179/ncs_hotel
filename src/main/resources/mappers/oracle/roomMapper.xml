@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.edu.mapper.RoomMapper">
+<mapper namespace="com.hotel.mapper.RoomMapper">
 	<select id="getRoomList" resultType="com.hotel.vo.Room" >
 		select a.roomcode, a.name, b.name as "type_name", a.howmany, a.howmuch 
 			from room a, roomtype b

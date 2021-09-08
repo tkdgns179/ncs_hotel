@@ -1,6 +1,8 @@
-package com.edu.mapper;
+package com.hotel.mapper;
 
 import java.util.ArrayList;
+
+import org.apache.ibatis.annotations.Param;
 
 import com.hotel.vo.Booking;
 import com.hotel.vo.Room;
@@ -10,4 +12,5 @@ public interface BookingMapper {
 	ArrayList<Booking> getBookings();
 	Booking getOneBooking(int id);
 	void doDeleteBooking(int id);
+	void doUpdateBooking(@Param("id")int id, @Param("booking")Booking booking);
 }

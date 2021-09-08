@@ -168,7 +168,19 @@
    			<version>20210307</version>
 		</dependency>
 		
+		<!-- 커맨드객체 유효성검사 Validation -->
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>1.1.0.Final</version>
+		</dependency>
 		
+		<!-- 하이버네이트 유효성검사 Hibernate-Validator -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>5.2.4.Final</version>
+		</dependency>
 		
 	</dependencies>
 	

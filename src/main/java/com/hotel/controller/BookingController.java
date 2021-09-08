@@ -1,7 +1,9 @@
 package com.hotel.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -10,6 +12,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,8 +23,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.edu.mapper.BookingMapper;
-import com.edu.mapper.RoomMapper;
+import com.hotel.mapper.BookingMapper;
+import com.hotel.mapper.RoomMapper;
 import com.hotel.vo.Booking;
 import com.hotel.vo.Room;
 
@@ -131,6 +135,17 @@ public class BookingController {
 		
 		return "OK";
 	}
+	
+	@RequestMapping(value = "/doUpdateBooking", method = RequestMethod.POST)
+	@ResponseBody
+	public String doUpdateBooking(HttpServletRequest request, Booking booking) {
+		int id = Integer.parseInt(request.getParameter("id"));
+		BookingMapper bookingMapper = sqlSession.getMapper(BookingMapper.class);
+		
+		bookingMapper.doUpdateBooking(id, booking);
+		
+		return "OK";
+	}
 //	FIXME ModelAttribute 데이터를 JSON 데이터로 넘겼음 그러나 Jquery에 JSTL로 구현해서 사용했기 때문에 막아둠
 //	@RequestMapping(value="/getRoomType", method=RequestMethod.POST)
 //	@ResponseBody
@@ -156,4 +171,28 @@ public class BookingController {
 //		}
 //		return ja.toString();
 //	}
+	
+	// return type = ResponseEntity<Map<String, Object>>, List<Object>
+	@RequestMapping(value = "/test", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object>  test() {
+		List<String> list1 = new ArrayList<String>();
+		list1.add("hello1");
+		list1.add("hello2");
+		List<String> list2 = new ArrayList<String>();
+		list2.add("hello1");
+		list2.add("hello2");
+		
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		
+		resultMap.put("list1", list1);
+		resultMap.put("list2", list2);
+		
+		// ResponseEntity<Map<String, Object>> result = new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+		
+		// List<Object> result = new ArrayList<Object>();
+		// result.add(list1);
+		// result.add(list2);
+		return resultMap;
+	}
 }
