@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.apache.ibatis.annotations.Param;
 
 import com.hotel.vo.Booking;
-import com.hotel.vo.Room;
 
 public interface BookingMapper {
 	void addBooking(Booking booking);

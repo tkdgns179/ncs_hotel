@@ -7,7 +7,9 @@
 	</select>
 	
 	<select id="doCheckUser" resultType="int">
-		select count(*) from member where loginid = #{loginid} and passcode = #{passcode}
+		select count(*) from member 
+			where loginid = #{loginid} 
+			and passcode = #{passcode}
 	</select>
 
 	<insert id="addMember">

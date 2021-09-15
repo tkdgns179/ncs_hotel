@@ -34,14 +34,16 @@ import com.hotel.vo.Room;
 public class BookingController {
 	
 	@Autowired
-	private SqlSession sqlSession;
+	private RoomMapper roomMapper;
+	@Autowired
+	private BookingMapper bookingMapper;
 	
 
 	@ModelAttribute("roomTypes")
-	public ArrayList<Room> roomtype() { return  sqlSession.getMapper(RoomMapper.class).getRoomType(); }
+	public ArrayList<Room> roomtype() { return  roomMapper.getRoomType(); }
 	
 	@ModelAttribute("roomList")
-	public ArrayList<Room> roomList() { return  sqlSession.getMapper(RoomMapper.class).getRoomList(); }
+	public ArrayList<Room> roomList() { return  roomMapper.getRoomList(); }
 	
 	
 	
@@ -62,7 +64,7 @@ public class BookingController {
 	public String getRoomDelete(HttpServletRequest request) {
 		int roomcode = Integer.parseInt(request.getParameter("roomcode"));
 		// System.out.println(roomcode);
-		RoomMapper roomMapper = sqlSession.getMapper(RoomMapper.class);
+		// RoomMapper roomMapper = sqlSession.getMapper(RoomMapper.class);
 		roomMapper.doDeleteRoom(roomcode);
 		return "OK";
 	}
@@ -70,7 +72,7 @@ public class BookingController {
 	@RequestMapping(value = "/addRoom", method = RequestMethod.POST)
 	@ResponseBody
 	public String addRoom(Room room) {
-		RoomMapper roomMapper = sqlSession.getMapper(RoomMapper.class);
+		// RoomMapper roomMapper = sqlSession.getMapper(RoomMapper.class);
 		// CHECK System.out.println(room.toString());
 		roomMapper.doAddRoom(room);
 		
@@ -80,7 +82,7 @@ public class BookingController {
 	@RequestMapping(value = "/updateRoom" , method = RequestMethod.POST)
 	@ResponseBody
 	public String updateRoom(Room room) {
-		RoomMapper roomMapper = sqlSession.getMapper(RoomMapper.class);
+		// RoomMapper roomMapper = sqlSession.getMapper(RoomMapper.class);
 		System.out.println(room.toString());
 		roomMapper.doUpdateRoom(room);
 		return "OK";
@@ -89,7 +91,7 @@ public class BookingController {
 	@RequestMapping(value = "/searchRooms", method = RequestMethod.POST)
 	@ResponseBody
 	public List<Room> searchRooms(Booking booking) {
-		RoomMapper roomMapper = sqlSession.getMapper(RoomMapper.class);
+		// RoomMapper roomMapper = sqlSession.getMapper(RoomMapper.class);
 		// System.out.println(booking.toString());
 		List<Room> roomList = roomMapper.getSearchRooms(booking);
 		// System.out.println(roomList.size());
@@ -99,7 +101,7 @@ public class BookingController {
 	@RequestMapping(value = "/addBooking", method = RequestMethod.POST)
 	@ResponseBody
 	public String addBooking(Booking booking) {
-		BookingMapper bookingMapper = sqlSession.getMapper(BookingMapper.class);
+		// BookingMapper bookingMapper = sqlSession.getMapper(BookingMapper.class);
 		// System.out.println(booking.toString());
 		bookingMapper.addBooking(booking);
 		
@@ -109,7 +111,7 @@ public class BookingController {
 	@RequestMapping(value = "/getBookings", method = RequestMethod.POST)
 	@ResponseBody
 	public List<Booking> getBookings() {
-		BookingMapper bookingMapper = sqlSession.getMapper(BookingMapper.class);
+		// BookingMapper bookingMapper = sqlSession.getMapper(BookingMapper.class);
 		List<Booking> bookingList = bookingMapper.getBookings();
 		
 		return bookingList;
@@ -119,7 +121,7 @@ public class BookingController {
 	@ResponseBody
 	public Booking getOneBooking(HttpServletRequest request) {
 		int id = Integer.parseInt(request.getParameter("id"));
-		BookingMapper bookingMapper = sqlSession.getMapper(BookingMapper.class);
+		// BookingMapper bookingMapper = sqlSession.getMapper(BookingMapper.class);
 		Booking booking = bookingMapper.getOneBooking(id);
 		// System.out.println(booking.toString());
 		
@@ -130,7 +132,7 @@ public class BookingController {
 	@ResponseBody
 	public String doDeleteBooking(HttpServletRequest request) {
 		int id = Integer.parseInt(request.getParameter("id"));
-		BookingMapper bookingMapper = sqlSession.getMapper(BookingMapper.class);
+		// BookingMapper bookingMapper = sqlSession.getMapper(BookingMapper.class);
 		bookingMapper.doDeleteBooking(id);
 		
 		return "OK";
@@ -140,7 +142,7 @@ public class BookingController {
 	@ResponseBody
 	public String doUpdateBooking(HttpServletRequest request, Booking booking) {
 		int id = Integer.parseInt(request.getParameter("id"));
-		BookingMapper bookingMapper = sqlSession.getMapper(BookingMapper.class);
+		// BookingMapper bookingMapper = sqlSession.getMapper(BookingMapper.class);
 		
 		bookingMapper.doUpdateBooking(id, booking);
 		

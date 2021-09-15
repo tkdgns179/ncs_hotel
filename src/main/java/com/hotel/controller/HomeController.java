@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.hotel.common.ExistingMemberException;
 import com.hotel.mapper.MemberMapper;
+import com.hotel.service.MemberService;
 import com.hotel.vo.Member;
 
 /**
@@ -25,6 +27,9 @@ public class HomeController {
 	
 	@Autowired
 	private SqlSession sqlSession;
+	
+	@Autowired
+	private MemberService memberService;
 	
 	HttpSession session; // 초기화 필요없음 필드임
 	
@@ -55,16 +60,21 @@ public class HomeController {
 	@RequestMapping(value = "/signup", method = RequestMethod.POST) 
 	public String signup(@ModelAttribute("member") @Valid Member member, Errors errors) {
 		
-		MemberMapper memberMapper = sqlSession.getMapper(MemberMapper.class);
 		System.out.println(member.toString());
 		
 		if (errors.hasErrors()) {
-			
 			System.out.println("에러검출 "+errors.toString());
 			return "sign";
 		}
 		
-		memberMapper.addMember(member);
+		try {
+			memberService.addCheckedMember(member);
+		}
+		catch (ExistingMemberException ex) {
+			System.out.println("예외진입");
+			return "sign";
+		}
+				
 		
 		return "redirect:/login_form";
 	}

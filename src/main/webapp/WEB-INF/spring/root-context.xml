@@ -3,13 +3,32 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
+	<!-- 마이바티스 -->
+	<bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521/XE" />		
+		<property name="username" value="ora_user" />
+		<property name="password" value="human123" />
+	</bean>
 	
+	<bean name="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="mapperLocations" value="classpath:/mappers/oracle/*.xml" />
+	</bean>
+	
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
 	<!-- 
 	<bean id='messageSource'
 		class='org.springframework.context.support.ResourceBundleMessageSource'>
@@ -20,8 +39,28 @@
 		</property>
 	</bean>
 	 -->
+	 <context:annotation-config />
 	 
+	 <!-- com.hotel.mapper 패키지 안의 인터페이스를 전부 빈으로 등록  -->
+	 <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    	<property name="basePackage" value="com.hotel.mapper" />
+    	<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+	 </bean>
+	 
+	 
+	 <context:component-scan base-package="com.hotel.service" />
 	<!-- validator -->
+	
+	<!-- 트랜잭션 설정 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<!-- Annotaion @Transactional 사용하기 위한 annotaion-driven
+	<tx:annotation-driven transaction-manager="transactionManager" /> -->
+	
 	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
+	
+	
 	
 </beans>

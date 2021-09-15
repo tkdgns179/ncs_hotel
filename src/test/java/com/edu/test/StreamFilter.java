@@ -9,7 +9,7 @@ public class StreamFilter {
 		
 		ArrayList<String> list = new ArrayList<>(Arrays.asList("Apple", "Banana", "Melon", "Grape", "Strawberry"));
 		
-		System.out.println(list.stream().filter( s -> s.length() > 5).findFirst().isPresent());
+		System.out.println(list.stream().filter( s -> s.length() > 10).findFirst().isPresent());
 		
 	}
 

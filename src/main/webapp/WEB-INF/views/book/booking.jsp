@@ -316,7 +316,7 @@ $(document)
 	
 	if (checkin > checkout) {
 		alert('체크아웃은 체크인보다 먼저일 수 없습니다')
-		$('#checkout').val('')
+		$('#checkin').val('')
 		return false
 	}
 	// console.log(checkin + '/' + checkout + '/' + sel_type)
