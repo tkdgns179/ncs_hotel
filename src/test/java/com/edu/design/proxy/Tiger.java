@@ -1,4 +1,4 @@
-package com.edu.test.proxy;
+package com.edu.design.proxy;
 
 public class Tiger implements Animal{
 

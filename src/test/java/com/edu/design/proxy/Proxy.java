@@ -1,4 +1,4 @@
-package com.edu.test.proxy;
+package com.edu.design.proxy;
 
 public class Proxy {
 	
@@ -8,10 +8,4 @@ public class Proxy {
 		System.out.println("동작이 끝났습니다");
 	}
 	
-	public static void main(String[] args) {
-		Animal animal = new Tiger();
-		
-		Proxy proxy = new Proxy();
-		proxy.whatToDo(animal);
-	}
 }

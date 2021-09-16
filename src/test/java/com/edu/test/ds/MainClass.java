@@ -1,4 +1,4 @@
-package com.edu.test;
+package com.edu.test.ds;
 
 public class MainClass {
 
@@ -20,7 +20,7 @@ public class MainClass {
 //		System.out.println(nodeSec.getData());
 //		System.out.println(refNode2.link.getData());
 		
-		LinkedList linkedList = new LinkedList();
+		MyLinkedList linkedList = new MyLinkedList();
 		
 //		linkedList.insertNode("hello");
 //		linkedList.insertNode("babo");
@@ -34,7 +34,29 @@ public class MainClass {
 		linkedList.insertNode("4");
 		
 		
-		
 		linkedList.printList();
+		
+		System.out.println("----------------------------------");
+		
+		MyList<String> myList = new MyList<String>();
+		
+		myList.pushItem("first");
+		System.out.println(myList.getItem(0));
+		
+		myList.pushItem("second");
+		System.out.println(myList.getItem(1));
+		
+		myList.pushItem("third");
+		myList.pushItem("forth");
+		myList.pushItem("fifth");
+		
+		System.out.println("뽑힌 아이템 = " + myList.popItem(1).toString());
+		
+		myList.printMyList();
+		
+		myList.pushItem("second", 1);
+		System.out.println(myList.getItem(1));
+		myList.printMyList();
+		
 	}
 }

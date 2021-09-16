@@ -1,4 +1,4 @@
-package com.edu.test;
+package com.edu.test.ds;
 
 class ListNode {
 	private String data;
@@ -24,11 +24,11 @@ class ListNode {
 	}
 }
 
-public class LinkedList {
+public class MyLinkedList {
 	
 	private ListNode head;
 	
-	public LinkedList() {
+	public MyLinkedList() {
 		head = null;
 	}
 	
