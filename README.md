@@ -1,1 +1,11 @@
-#
+### 2021-09-31
+- 데코레이터 패턴을 배웠습니다.
+- 루트 노드로 Beverage 추상클래스르 생성하고 CondimentDecorator 서브 트리를 하나 더 생성하였습니다
+- 형태는 I/OStream Class와 비슷하였고 처음에는 선택할 음료를 고르고,
+- 그 다음은 CondimentDecorator를 상속한 자식클래스는 Beverage를 필드로 가지고있고
+- CondimentDecoraort 구현클래스가 자신의 메세지에 Beverage의 메세지 추가해서 전달하여 Beverage의 cost()메소드에 추가하여 전달받습니다.
+- 작동 원리는 Condiment 구현클래스는 필드로 Beverage를 받기 때문에 먼저 음료를 선택해줍니다 메인클래스에서 선택한 클래스는 0. Expresso입니다.
+- 1. beverage = new Mocha(beverage)를 해주면 beverage필드에 Expresso 구현체를 받습니다
+- 이렇게 구현된 객체 beverage에 또 다시 자기 자신을 받는 인스턴스를 만들어줍니다 ex) 2. beverage = new Mocha(beverage)
+- beverage의 cost메소드를 실행시키면 1에게 메소드를 요청합니다.
+- 1이 자신의 메소드를 주고나서 다시 0에게 메소드를 요청합니다. 그렇게 beverage가 2와 1의 데코레이션된 코스트를 최종적으로 전달해줍니다.
